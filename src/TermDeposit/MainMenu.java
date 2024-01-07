@@ -26,7 +26,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.UIManager;
 
 public class MainMenu {
 //	public MainMenu() {
@@ -44,21 +43,21 @@ public class MainMenu {
 		final JFrame frame = new JFrame("Bank Al Habib");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(800,614);
+		frame.setSize(800,615);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(143, 188, 143));
+		panel.setBackground(new Color(0, 128, 128));
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
 		
 		final JButton termDepositButton = new JButton("Term Deposit");
-		termDepositButton.setForeground(Color.BLACK);
+		termDepositButton.setForeground(new Color(255, 255, 255));
 		termDepositButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		termDepositButton.setBackground(UIManager.getColor("Button.background"));
-		termDepositButton.setBounds(281, 215, 213, 50);
+		termDepositButton.setBackground(new Color(0, 128, 0));
+		termDepositButton.setBounds(285, 255, 213, 50);
 		panel.add(termDepositButton);
 		
 		JPopupMenu termDepositPopup = new JPopupMenu();
@@ -66,14 +65,15 @@ public class MainMenu {
 		termDepositPopup.setForeground(new Color(255, 255, 255));
 		termDepositPopup.setBackground(new Color(0, 128, 0));
 		
+		
 		JButton newApplicationButton = new JButton("New Application");
 		newApplicationButton.setVisible(false);
 		newApplicationButton.setMaximumSize(new Dimension(200, 23));
 		newApplicationButton.setPreferredSize(new Dimension(200, 23));
 		newApplicationButton.setMinimumSize(new Dimension(200, 23));
-		newApplicationButton.setForeground(Color.BLACK);
+		newApplicationButton.setForeground(new Color(255, 255, 255));
 		newApplicationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		newApplicationButton.setBackground(UIManager.getColor("Button.background"));
+		newApplicationButton.setBackground(new Color(0, 128, 0));
 		newApplicationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SearchAccount sa = new SearchAccount();
@@ -86,9 +86,9 @@ public class MainMenu {
 		modifyApplicationButton.setMaximumSize(new Dimension(200, 23));
 		modifyApplicationButton.setPreferredSize(new Dimension(200, 23));
 		modifyApplicationButton.setMinimumSize(new Dimension(200, 23));
-		modifyApplicationButton.setForeground(Color.BLACK);
+		modifyApplicationButton.setForeground(new Color(255, 255, 255));
 		modifyApplicationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		modifyApplicationButton.setBackground(UIManager.getColor("Button.background"));
+		modifyApplicationButton.setBackground(new Color(0, 128, 0));
 		modifyApplicationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TermDepositSearch tds = new TermDepositSearch();
@@ -108,9 +108,9 @@ public class MainMenu {
 		tdrOpenning.setMaximumSize(new Dimension(200, 23));
 		tdrOpenning.setPreferredSize(new Dimension(200, 23));
 		tdrOpenning.setMinimumSize(new Dimension(200, 23));
-		tdrOpenning.setForeground(Color.BLACK);
+		tdrOpenning.setForeground(new Color(255, 255, 255));
 		tdrOpenning.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tdrOpenning.setBackground(UIManager.getColor("Button.background"));
+		tdrOpenning.setBackground(new Color(0, 128, 0));
 		tdrOpenning.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TermDepositSearch tds = new TermDepositSearch();
@@ -125,14 +125,14 @@ public class MainMenu {
 		});
 		termDepositPopup.add(tdrOpenning);
 
-		JButton tdrPreMatureEncashment = new JButton("Pre-mature encashment");
+		JButton tdrPreMatureEncashment = new JButton("TDR Pre-mature encashment");
 		tdrPreMatureEncashment.setVisible(false);
 		tdrPreMatureEncashment.setMaximumSize(new Dimension(200, 23));
 		tdrPreMatureEncashment.setPreferredSize(new Dimension(200, 23));
 		tdrPreMatureEncashment.setMinimumSize(new Dimension(200, 23));
-		tdrPreMatureEncashment.setForeground(Color.BLACK);
+		tdrPreMatureEncashment.setForeground(new Color(255, 255, 255));
 		tdrPreMatureEncashment.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tdrPreMatureEncashment.setBackground(UIManager.getColor("Button.background"));
+		tdrPreMatureEncashment.setBackground(new Color(0, 128, 0));
 		tdrPreMatureEncashment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -151,9 +151,9 @@ public class MainMenu {
 		authorizeApplicationButton.setMaximumSize(new Dimension(200, 23));
 		authorizeApplicationButton.setPreferredSize(new Dimension(200, 23));
 		authorizeApplicationButton.setMinimumSize(new Dimension(200, 23));
-		authorizeApplicationButton.setForeground(Color.BLACK);
+		authorizeApplicationButton.setForeground(Color.WHITE);
 		authorizeApplicationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		authorizeApplicationButton.setBackground(UIManager.getColor("Button.background"));
+		authorizeApplicationButton.setBackground(new Color(0, 128, 0));
 		authorizeApplicationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -168,8 +168,8 @@ public class MainMenu {
 		termDepositPopup.add(authorizeApplicationButton);
 		JButton setDateButton = new JButton("Set Date");
 	      setDateButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-	      setDateButton.setForeground(Color.BLACK);
-	      setDateButton.setBackground(UIManager.getColor("Button.background"));
+	      setDateButton.setForeground(new Color(255, 255, 255));
+	      setDateButton.setBackground(new Color(0, 128, 0));
 	      setDateButton.setBounds(590, 457, 133, 34);
 
 	      panel.add(setDateButton);
@@ -256,14 +256,14 @@ public class MainMenu {
 	      });
 
 		
-	      JButton tdrPreMatureAuthorizationButton = new JButton("Premature Authorization");
+	      JButton tdrPreMatureAuthorizationButton = new JButton("TDR Premature Authorization");
 			tdrPreMatureAuthorizationButton.setVisible(false);
 			tdrPreMatureAuthorizationButton.setMaximumSize(new Dimension(200, 23));
 			tdrPreMatureAuthorizationButton.setPreferredSize(new Dimension(200, 23));
 			tdrPreMatureAuthorizationButton.setMinimumSize(new Dimension(200, 23));
-			tdrPreMatureAuthorizationButton.setForeground(Color.BLACK);
+			tdrPreMatureAuthorizationButton.setForeground(new Color(255, 255, 255));
 			tdrPreMatureAuthorizationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			tdrPreMatureAuthorizationButton.setBackground(UIManager.getColor("Button.background"));
+			tdrPreMatureAuthorizationButton.setBackground(new Color(0, 128, 0));
 			tdrPreMatureAuthorizationButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					TermDepositSearch tds = new TermDepositSearch();
@@ -286,9 +286,9 @@ public class MainMenu {
 				LoginUser lu = new LoginUser();
 			}
 		});
-		signoutButton.setForeground(Color.BLACK);
+		signoutButton.setForeground(new Color(255, 255, 255));
 		signoutButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		signoutButton.setBackground(UIManager.getColor("Button.background"));
+		signoutButton.setBackground(new Color(0, 128, 0));
 		signoutButton.setBounds(590, 502, 133, 34);
 		panel.add(signoutButton);
 		
