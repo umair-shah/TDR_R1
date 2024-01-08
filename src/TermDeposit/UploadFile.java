@@ -39,7 +39,12 @@ public class UploadFile {
 
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            
+            double sizeInMB = (double) selectedFile.length() / (1024 * 1024);
+ 
+            if(sizeInMB > 1.0  )
+            {
+            	return "File Size Exceeds";
+            }
             if(selectedFile != null)
             {
 	           	 path=selectedFile.getAbsolutePath().toString();

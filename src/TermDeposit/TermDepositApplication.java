@@ -285,11 +285,19 @@ public class TermDepositApplication {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					String Filename=filehandler.selectFile();
-					
-					if(Filename != "")
+					if(Filename.equals("File Size Exceeds"))
+					{
+						JOptionPane.showMessageDialog(frame, "File size exceeds 1 MB limit !","Invalid Size",JOptionPane.ERROR_MESSAGE);
+
+					}
+					else if(Filename != "")
 					{
 						lblFileName.setText(Filename);
 						btnViewFile.setVisible(true);
+					}
+					else{
+						JOptionPane.showMessageDialog(frame, "Invalid File!","Invalid File",JOptionPane.ERROR_MESSAGE);
+
 					}
 					
 					
