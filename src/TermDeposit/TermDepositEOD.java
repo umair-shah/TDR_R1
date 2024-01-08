@@ -130,6 +130,7 @@ public class TermDepositEOD {
         			action= TDRs.getInt("Maturity_Action");
         			if( TDRs.getString("Last_payout_date").equals(dateFormat.format(startDate)) && action != 3)
         			{
+        				TDRSS = new TermDepositApplicationService();
         				payoutTransaction(TDRs,dateFormat.format(startDate));
         			}
         			if(TDRs.getString("Maturity_date").equals(dateFormat.format(startDate)))

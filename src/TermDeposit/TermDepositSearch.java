@@ -48,7 +48,7 @@ public class TermDepositSearch {
 		frmSearchDeal.setVisible(true);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 128));
+		panel.setBackground(new Color(143, 188, 143));
 		frmSearchDeal.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
@@ -120,16 +120,19 @@ public class TermDepositSearch {
 				else{
 					String DealId= String.format(utility.lpad(maxDealNoField.getText().toString(), '0', 6))+Session.GetBranchCode()+utility.lpad(dateField.getText().toString(), '0', 2)+yearField.getText().toString();
 					TermDepositApplicationDTO TDADTO =TDRSS.GetTDRDealDetails(DealId,21);
-					if(TDADTO.GetApplicationDate().equals(Session.GetBranchDate()) )
-		        	{
-						JOptionPane.showMessageDialog(frame, "Premature Encashment is not possible on same day","Invalid Operation",JOptionPane.ERROR_MESSAGE);
-
-		        	}
-					else if(TDADTO.GetTDRDealId()!= null)
+					if(TDADTO.GetTDRDealId()!= null)
 					{
-						frmSearchDeal.dispose();
-						TermDepositApplication TDRApplication= new TermDepositApplication();
-						TDRApplication.PrematureEncashment(TDADTO);
+						if(TDADTO.GetApplicationDate().equals(Session.GetBranchDate()) )
+			        	{
+							JOptionPane.showMessageDialog(frame, "Premature Encashment is not possible on same day","Invalid Operation",JOptionPane.ERROR_MESSAGE);
+
+			        	}
+						else
+						{
+							frmSearchDeal.dispose();
+							TermDepositApplication TDRApplication= new TermDepositApplication();
+							TDRApplication.PrematureEncashment(TDADTO);
+						}
 					}
 					
 					else{
@@ -152,7 +155,7 @@ public class TermDepositSearch {
 		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 128));
+		panel.setBackground(new Color(143, 188, 143));
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 

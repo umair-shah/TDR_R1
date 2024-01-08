@@ -1021,8 +1021,8 @@ public class TermDepositApplicationService {
 			if (actualProfit > profitPaid)
 			{
 				float profitToBePaid = actualProfit - profitPaid;
-				float taxRate = getTaxRate();
-				float Tax = (float) (profitToBePaid * taxRate);
+ 					float taxRate = getTaxRate();
+ 				float Tax = (float) (profitToBePaid * taxRate);
 				PreparedStatement preparedStatement7 = lcl_conn_dt.prepareStatement(ProfitFundVoucher);
 				preparedStatement7.setString(1, Session.GetBranchCode());
 				preparedStatement7.setString(2, Session.GetBranchDate());
@@ -1148,6 +1148,7 @@ public class TermDepositApplicationService {
 			return null;
 		}
 	}
+	
 	
 	public float getSavingRate()
 	{
