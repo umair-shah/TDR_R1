@@ -39,13 +39,11 @@ public class TermDepositSearch {
 	}
 	public void SearchDeal()
 	{
-		final JFrame frmSearchDeal = new JFrame("Search Account");
+		final JDialog frmSearchDeal = new JDialog();
 		frmSearchDeal.setTitle("Search Deal");
 		frmSearchDeal.setResizable(false);
 		frmSearchDeal.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSearchDeal.setSize(495,161);
-		frmSearchDeal.setLocationRelativeTo(null);
-		frmSearchDeal.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(143, 188, 143));
@@ -144,16 +142,19 @@ public class TermDepositSearch {
 				}
 			}
 		});
+		frmSearchDeal.setContentPane(panel);
+		frmSearchDeal.setLocationRelativeTo(null);
+		frmSearchDeal.setModal(true);
+		frmSearchDeal.setVisible(true);
 	}
 	public void CreateTDRApplicationWindow(final int operation) throws SQLException 
 	{
-		final JFrame frame = new JFrame("Term Deposit");
+		final JDialog frame = new JDialog();
+		frame.setTitle("Term Deposit");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(834,362);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		
+
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(143, 188, 143));
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
@@ -200,6 +201,7 @@ public class TermDepositSearch {
 		        int row = table.rowAtPoint(point);
 		        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					//JOptionPane.showMessageDialog(frame, "Amount is required!","row = "+table.getValueAt(row, 0).toString() ,JOptionPane.ERROR_MESSAGE);
+		        	frame.dispose();
 		        	String applicationNo= table.getValueAt(row, 2).toString();
 		        	TermDepositApplicationDTO TDRAppDto = TDRSS.GetTDRAppDetails(applicationNo);
 		        	
@@ -232,6 +234,11 @@ public class TermDepositSearch {
 		
 		
 		panel.repaint();
+		
+		frame.setContentPane(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -244,15 +251,14 @@ public class TermDepositSearch {
 	}
 	public void AuthorizePreMatureWindow() throws SQLException 
 	{
-		final JFrame frame = new JFrame("Term Deposit");
+		final JDialog frame = new JDialog();
+		frame.setTitle("Authorize Premature Term Deposit");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(834,362);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
-		
+
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 128, 128));
+		panel.setBackground(new Color(143, 188, 143));
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
@@ -282,8 +288,9 @@ public class TermDepositSearch {
 		        int row = table.rowAtPoint(point);
 		        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 					//JOptionPane.showMessageDialog(frame, "Amount is required!","row = "+table.getValueAt(row, 0).toString() ,JOptionPane.ERROR_MESSAGE);
+		        	frame.dispose();
 		        	String DealNo= table.getValueAt(row, 1).toString();
-		        	DealNo.replace("/","");
+		        	DealNo = DealNo.replace("/","");
 		        	TermDepositApplicationDTO TDRAppDto = TDRSS.GetTDRDealDetails(DealNo,3);
 		        	TermDepositApplication TDRApplication= new TermDepositApplication();
 		        	TDRApplication.PrematureEncashment(TDRAppDto);
@@ -304,6 +311,10 @@ public class TermDepositSearch {
 		
 		
 		panel.repaint();
+		frame.setContentPane(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 	}
 
 }

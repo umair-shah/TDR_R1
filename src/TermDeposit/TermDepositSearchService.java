@@ -214,7 +214,7 @@ public class TermDepositSearchService {
 		
 		String tdrAppQuery = "Select B.brn_cd||lpad(At.acc_type_cd,4,'0')||C.Customer_no ||lpad(acc.run_no,2,'0') || acc.Check_digit  " +
 				"As AccountNo ,tdr.amount,lpad(tdr.application_id,5,'0')||'/'||C.Customer_No||'/'||Year(tdr.application_date)  As ApplicationNo ,P.Desc " +
-				"As Tenure ,M.Desc  As ActionatMaturity, lpad(td.deal_id,6,'0')||'/'||b.brn_cd||'/'||Day(td.Deal_date)||'/'||Year(td.deal_date) As Deal_No ," +
+				"As Tenure ,M.Desc  As ActionatMaturity, lpad(td.deal_id,6,'0')||'/'||b.brn_cd||'/'|| lpad(Day(td.Deal_date), 2, '0')||'/'||Year(td.deal_date) As Deal_No ," +
 				"tdr.maturity_date from TDR_Application tdr inner join Account_tl acc on tdr.account_id= acc.account_id " +
 				"inner join Account_Type At on acc.Acc_type_id=At.Acc_type_id inner join Branch_tl B on acc.brn_ID = B.brn_ID inner join " +
 				"Customer C on C.Customer_ID= acc.Customer_ID inner join TDR_product " +

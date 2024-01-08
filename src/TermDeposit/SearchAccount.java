@@ -3,6 +3,7 @@ package TermDeposit;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,12 +31,10 @@ public class SearchAccount {
 	
 	public void CreateWindow()
 	{
-		final JFrame frame = new JFrame("Search Account");
+		final JDialog frame = new JDialog();
+		frame.setTitle("Search Account");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(368,161);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(143, 188, 143));
@@ -101,6 +100,12 @@ public class SearchAccount {
 				frame.dispose();
 			}
 		});
+		
+		frame.setContentPane(panel);
+		frame.setSize(368,161);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 	}
 	/**
 	 * @param args

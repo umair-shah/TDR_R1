@@ -228,13 +228,13 @@ public class MainMenu {
 	                		  {
 	                			  JOptionPane.showMessageDialog(null, "TDR Authorization Queue is not Empty ", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
 	                		  }
-	                		  else if(TDEOD.CheckTDRAuthPendingTask() != 0)
+	                		  else if(TDEOD.CheckTDROpeningQueue() != 0)
 	                		  {
-	                			  JOptionPane.showMessageDialog(null, "TDR Pre Mature Authorization Queue is not Empty ", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
+	                			  JOptionPane.showMessageDialog(null, "TDR Opening Queue is not Empty ", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
 	                		  }
 	                		  else if(TDEOD.CheckTDRPreMatureAuth() != 0)
 	                		  {
-	                			  JOptionPane.showMessageDialog(null, "TDR Opening Authorization Queue is not Empty ", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
+	                			  JOptionPane.showMessageDialog(null, "TDR Pre Mature Authorization Queue is not Empty ", "Invalid Operation", JOptionPane.ERROR_MESSAGE);
 
 	                		  }
 	                		  else {

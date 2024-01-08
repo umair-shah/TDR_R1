@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.FileHandler;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -39,7 +40,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 public class TermDepositApplication {
-	private JFrame frame;
+	private JDialog frame;
 	private JPanel panel;
 	private JTextField accountTitleField;
 	private JTextField branchNameField;
@@ -121,12 +122,10 @@ public class TermDepositApplication {
 	}
 	public void CreateWindow()
 	{
-		frame = new JFrame("Term Deposit Application");
+		frame = new JDialog();
+		frame.setTitle("Term Deposit Application");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(599,711);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
 		
 		panel = new JPanel();
 		panel.setBackground(new Color(143, 188, 143));
@@ -361,6 +360,9 @@ public class TermDepositApplication {
 		}
 		
 		panel.repaint();
+		
+		frame.setSize(599,592);
+		
 	}
 
 	
@@ -535,6 +537,11 @@ public class TermDepositApplication {
 			}
 		}
 		});
+		
+		frame.setContentPane(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 	}
 	
 	public void NewTDA(final AccountDTO accountDTO)
@@ -670,6 +677,11 @@ public class TermDepositApplication {
 			}
 		}
 		});
+		
+		frame.setContentPane(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 	}
 
 	public void AuthorizeTDA(final TermDepositApplicationDTO TDRAppDto)
@@ -777,6 +789,11 @@ public class TermDepositApplication {
 				frame.dispose();
 			}
 		});
+		
+		frame.setContentPane(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 	}
 	public void OpenTDR(final TermDepositApplicationDTO TDRAppDto)
 	{
@@ -853,12 +870,13 @@ public class TermDepositApplication {
 				
 				if(dealNo != null)
 				{
-					final JFrame frame = new JFrame("TDR Opening Voucher");
+					JOptionPane.showMessageDialog(frame, "TDR Opened Successfully \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal Number = "+dealNo,"Successful",JOptionPane.INFORMATION_MESSAGE);
+					frame.dispose();
+					final JDialog frame = new JDialog();
+					frame.setTitle("TDR Opening Voucher");
 					frame.setResizable(false);
 					frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame.setSize(834,362);
-					frame.setLocationRelativeTo(null);
-					frame.setVisible(true);
 					
 					JPanel panel = new JPanel();
 					panel.setBackground(new Color(143, 188, 143));
@@ -889,21 +907,30 @@ public class TermDepositApplication {
 					btnOk.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							frame.dispose();
-							JOptionPane.showMessageDialog(frame, "TDR Opened Successfully \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal Number = "+dealNo,"Successful",JOptionPane.INFORMATION_MESSAGE);
 						}
 					});
 					btnOk.setBounds(690, 268, 89, 23);
 					panel.add(btnOk);
 					jScrollPane.setVisible(true);
 					panel.repaint();
+					
+					frame.setContentPane(panel);
+					frame.setLocationRelativeTo(null);
+					frame.setModal(true);
+					frame.setVisible(true);
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(frame, "TDR Opened UnSuccessfully \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
+					frame.dispose();
+					JOptionPane.showMessageDialog(frame, "TDR Openning UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
 				}
-				frame.dispose();
 			}
 		});
+		
+		frame.setContentPane(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 		
 	}
 
@@ -912,6 +939,7 @@ public class TermDepositApplication {
 		final AccountDTO accdto=TDRAppDto.GetAccountDTO();
 		JButton prematureEncashmentButton;
 		filehandler=new UploadFile();
+		frame.resize(599,711);
 		btnViewFile = new JButton("View File");
 		btnViewFile.setBounds(321, 26, 89, 23);
 		panel_3.add(btnViewFile);
@@ -1071,9 +1099,11 @@ public class TermDepositApplication {
 					if(dealno != null)
 					{
 						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction generated Successfully \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal No = "+dealno,"Successful",JOptionPane.INFORMATION_MESSAGE);
+						frame.dispose();
 					}
 					else{
 						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
+						frame.dispose();
 					}
 				}
 			});
@@ -1094,15 +1124,16 @@ public class TermDepositApplication {
 					String dealno= tdrService.PrematureEncashmentTransaction(TDRAppDto,paidprofit,actualProfit);
 					if(dealno != null)
 					{
-						final JFrame frame = new JFrame("TDR PreEncashment Voucher");
+						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction authorized Successfully \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal No = "+dealno,"Successful",JOptionPane.INFORMATION_MESSAGE);	
+						frame.dispose();
+						final JDialog frame = new JDialog();
+						frame.setTitle("TDR PreEncashment Voucher");
 						frame.setResizable(false);
 						frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 						frame.setSize(834,362);
-						frame.setLocationRelativeTo(null);
-						frame.setVisible(true);
 						
 						JPanel panel = new JPanel();
-						panel.setBackground(new Color(0, 128, 128));
+						panel.setBackground(new Color(143, 188, 143));
 						frame.getContentPane().add(panel, BorderLayout.CENTER);
 						panel.setLayout(null);
 
@@ -1131,19 +1162,29 @@ public class TermDepositApplication {
 						panel.add(btnOk);
 						jScrollPane.setVisible(true);
 						panel.repaint();
+						
 						btnOk.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
 								frame.dispose();
 							}
 							});
-						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction generated Successfully \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal No = "+dealno,"Successful",JOptionPane.INFORMATION_MESSAGE);
+						
+						frame.setContentPane(panel);
+						frame.setLocationRelativeTo(null);
+						frame.setModal(true);
+						frame.setVisible(true);
 					}
 					else{
-						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction authorization Unsuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
+						frame.dispose();
 					}
 				}
 			});
 		}
+		frame.setContentPane(panel);
+		frame.setLocationRelativeTo(null);
+		frame.setModal(true);
+		frame.setVisible(true);
 		
 	}
 //	
