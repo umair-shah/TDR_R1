@@ -96,7 +96,7 @@ public class UploadFile {
 			e.printStackTrace();
 		}
     }
-	private Image getScaledImage(Image srcImg, int maxWidth, int maxHeight){
+	public  Image getScaledImage(Image srcImg, int maxWidth, int maxHeight){
 	    int originalWidth = srcImg.getWidth(null);
 	    int originalHeight = srcImg.getHeight(null);
 	    int newWidth = originalWidth;

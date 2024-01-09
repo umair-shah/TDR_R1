@@ -74,7 +74,7 @@ public class TermDepositSearchService {
 		ResultSet TDRAppDetail=null;
 		
 		String tdrAppQuery = "SELECT B.brn_cd||lpad(At.acc_type_cd,4,'0')||C.Customer_no||lpad(acc.run_no,2,'0') ||" +
-				"acc.Check_digit As Account_No,acc.account_id,acc.title,B.Brn_cd,B.Brn_Name,Curr.Currency_name,acc.balance," +
+				"acc.Check_digit As Account_No,acc.account_id,acc.title,B.Brn_cd,B.Brn_Name,Curr.Currency_name,acc.balance, acc.signature, " +
 				"tdr.application_date,tdr.Amount,tdr.TDR_Request_Doc,tdr.TDR_Request_Doc_Name,tdr.mode_of_fund,tdr.maturity_action,tdr.product_id,tp.tdr_rate " +
 				"from TDR_Application tdr INNER JOIN Account_tl acc ON tdr.account_id=acc.account_id INNER JOIN Branch_tl B ON B.brn_ID=acc.brn_Id " +
 				"INNER JOIN Customer C ON acc.Customer_id=C.Customer_id INNER JOIN account_type At ON At.acc_type_id=acc.acc_type_id INNER JOIN Currency " +
@@ -101,7 +101,7 @@ public class TermDepositSearchService {
         	 tdrFundAcc.SetCurrency(TDRAppDetail.getString("Currency_name"));
         	 tdrFundAcc.SetBalance(TDRAppDetail.getFloat("Balance"));
         	 tdrFundAcc.SetAccountID(TDRAppDetail.getString("account_id"));
-        	 
+        	 tdrFundAcc.SetSignature(TDRAppDetail.getBytes("signature"));
         	 tdrAppDto.SetAccountID(TDRAppDetail.getString("account_id"));
         	 tdrAppDto.SetAccountNo(TDRAppDetail.getString("Account_no"));
         	 tdrAppDto.SetApplicationNo(TDRNo);
@@ -132,7 +132,7 @@ public class TermDepositSearchService {
 		ResultSet TDRAppDetail=null;
 		String tdrAppQuery = "SELECT B.brn_cd||lpad(At.acc_type_cd,4,'0')||C.Customer_no||lpad(acc.run_no,2,'0') ||" +
 				"acc.Check_digit As Account_No,acc.account_id,acc.title,B.Brn_cd,B.Brn_Name,Curr.Currency_name,acc.balance,lpad(tdr.application_id,5,'0')||c.Customer_no||Year(td.deal_date) As Application_no," +
-				"td.deal_id,tdr.application_date,tdr.Amount,tdr.TDR_Request_Doc,tdr.TDR_Request_Doc_Name,tdr.mode_of_fund,tdr.maturity_action,tdr.product_id,tp.tdr_rate " +
+				"td.deal_id,tdr.application_date,tdr.Amount,tdr.TDR_Request_Doc,tdr.TDR_Request_Doc_Name,tdr.mode_of_fund,tdr.maturity_action,tdr.product_id,tp.tdr_rate acc.signature " +
 				"from TDR_Application tdr INNER JOIN Account_tl acc ON tdr.account_id=acc.account_id INNER JOIN Branch_tl B ON B.brn_ID=acc.brn_Id " +
 				"INNER JOIN Customer C ON acc.Customer_id=C.Customer_id INNER JOIN account_type At ON At.acc_type_id=acc.acc_type_id INNER JOIN Currency " +
 				"curr ON acc.curr_cd_id = curr.ID inner join tdr_deal td on td.tdr_app_id = tdr.application_id inner join tdr_product tp " +
@@ -160,6 +160,7 @@ public class TermDepositSearchService {
         	 tdrFundAcc.SetCurrency(TDRAppDetail.getString("Currency_name"));
         	 tdrFundAcc.SetBalance(TDRAppDetail.getFloat("Balance"));
         	 tdrFundAcc.SetAccountID(TDRAppDetail.getString("account_id"));
+        	 tdrFundAcc.SetSignature(TDRAppDetail.getBytes("signature"));
         	 
         	 tdrAppDto.SetAccountID(TDRAppDetail.getString("account_id"));
         	 tdrAppDto.SetAccountNo(TDRAppDetail.getString("Account_no"));
@@ -258,8 +259,6 @@ public class TermDepositSearchService {
 		return data;
 	
 	}
-
-
 }
 
 

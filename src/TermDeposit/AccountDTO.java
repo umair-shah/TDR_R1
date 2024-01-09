@@ -11,11 +11,13 @@ public class AccountDTO {
 	private String branchDate;
 	private float balance;
 	private String accountStatus;
+	private byte[] signature;
 	
 	public void SetResult(boolean result)
 	{
 		this.result = result;
 	}
+	
 	public void SetAccountID(String accountID)
 	{
 		this.accountID = accountID;
@@ -58,6 +60,10 @@ public class AccountDTO {
 	public void SetAccountStatus(String accountStatus)
 	{
 		this.accountStatus = accountStatus;
+	}
+	public void SetSignature(byte[] signature)
+	{
+		this.signature = signature;
 	}
 	public String GetAccountID()
 	{
@@ -107,7 +113,10 @@ public class AccountDTO {
 	{
 		return accountStatus;
 	}
-	
+	public byte[] GetSignature()
+	{
+		return this.signature ;
+	}
 
 	/**
 	 * @param args

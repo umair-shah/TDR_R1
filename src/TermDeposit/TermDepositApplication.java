@@ -3,6 +3,7 @@ import Utilities.*;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.sql.Connection;
@@ -17,6 +18,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.FileHandler;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -33,6 +37,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -84,7 +89,7 @@ public class TermDepositApplication {
 	private JPanel panel_4;
 	private JPanel panel_5;
 	private JPanel panel_6;
-	
+	private JPanel panel_1;
 	
 	
 	public TermDepositApplication()
@@ -132,7 +137,7 @@ public class TermDepositApplication {
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JPanel panel_1 = new JPanel();
+		panel_1 = new JPanel();
 		panel_1.setBackground(new Color(143, 188, 143));
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Account Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(10, 11, 573, 146);
@@ -184,10 +189,16 @@ public class TermDepositApplication {
 		currencyField.setColumns(10);
 		
 		accountTitleField = new JTextField();
-		accountTitleField.setBounds(102, 19, 429, 20);
+		accountTitleField.setBounds(102, 19, 188, 20);
 		panel_1.add(accountTitleField);
 		accountTitleField.setEditable(false);
 		accountTitleField.setColumns(10);
+		
+		JLabel lblSignature = new JLabel("Signature");
+		lblSignature.setBounds(314, 22, 46, 14);
+		panel_1.add(lblSignature);
+		
+
 		
 		panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Term Deposit Details", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -390,6 +401,16 @@ public class TermDepositApplication {
 
 		final AccountDTO accdto=TDRAppDto.GetAccountDTO();
 		
+		JButton btnNewButton = new JButton("View Signature");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				viewSignature(accdto.GetSignature());
+			}
+		});
+		btnNewButton.setBounds(401, 18, 130, 23);
+		panel_1.add(btnNewButton);
+		
 		btnViewFile = new JButton("View File");
 		btnViewFile.setBounds(321, 26, 89, 23);
 		panel_3.add(btnViewFile);
@@ -548,7 +569,7 @@ public class TermDepositApplication {
 		
 		frame.setContentPane(panel);
 		frame.setLocationRelativeTo(null);
-		frame.setModal(true);
+		frame.setModal(false);
 		frame.setVisible(true);
 	}
 	
@@ -561,6 +582,7 @@ public class TermDepositApplication {
 		panel.add(panel_4);
 		panel_4.setLayout(null);
 		
+		
 		saveButton = new JButton("Save");
 		saveButton.setBounds(431, 11, 132, 23);
 		panel_4.add(saveButton);
@@ -568,6 +590,16 @@ public class TermDepositApplication {
 		btnViewFile = new JButton("View File");
 		btnViewFile.setBounds(321, 26, 89, 23);
 		panel_3.add(btnViewFile);
+		
+		JButton btnNewButton = new JButton("View Signature");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				viewSignature(accountDTO.GetSignature());
+			}
+		});
+		btnNewButton.setBounds(401, 18, 130, 23);
+		panel_1.add(btnNewButton);
 		btnViewFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(filehandler.path != null)
@@ -728,6 +760,17 @@ public class TermDepositApplication {
 		branchNameField.setText(accdto.GetBranchName());
 		dateField.setText(TDRAppDto.GetApplicationDate());
 		currencyField.setText(accdto.GetCurrency());
+		
+		JButton btnNewButton = new JButton("View Signature");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				viewSignature(accdto.GetSignature());
+			}
+		});
+		btnNewButton.setBounds(401, 18, 130, 23);
+		panel_1.add(btnNewButton);
+		
 		int i=0;
 		while(i < modeOfFundComboBox.getItemCount())
 		{
@@ -756,6 +799,8 @@ public class TermDepositApplication {
 			}
 			i++;
 		}
+		
+		
 		profitNomAccountField.setText(TDRAppDto.GetProfitNomAccount());
 		principalFundCrField.setText(TDRAppDto.GetPrincipalFundCrAccount());
 		lblFileName.setText(TDRAppDto.GetFileName());
@@ -783,6 +828,7 @@ public class TermDepositApplication {
 				frame.dispose();
 			}
 		});
+		
 		rejectButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent authorizebtnClicked) {
 				String dealNo = tdrService.RejectTDRApplication(TDRAppDto);
@@ -823,7 +869,14 @@ public class TermDepositApplication {
 			public void actionPerformed(ActionEvent arg0) {
 			filehandler.viewFile(TDRAppDto.GetFileData(), TDRAppDto.GetFileName());
 		}});
-
+		JButton btnNewButton = new JButton("View Signature");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				viewSignature(accdto.GetSignature());
+			}
+		});
+		btnNewButton.setBounds(401, 18, 130, 23);
+		panel_1.add(btnNewButton);
 		accountNoField.setText(TDRAppDto.GetAccountNo());
 		accountTitleField.setText(TDRAppDto.GetAccountTitle());
 		branchCodeField.setText(accdto.GetBranchCode());
@@ -962,6 +1015,15 @@ public class TermDepositApplication {
 		branchNameField.setText(accdto.GetBranchName());
 		dateField.setText(TDRAppDto.GetApplicationDate());
 		currencyField.setText(accdto.GetCurrency());
+		
+		JButton btnNewButton = new JButton("View Signature");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				viewSignature(accdto.GetSignature());
+			}
+		});
+		btnNewButton.setBounds(401, 18, 130, 23);
+		panel_1.add(btnNewButton);
 		int i=0;
 		while(i < modeOfFundComboBox.getItemCount())
 		{
@@ -1193,6 +1255,49 @@ public class TermDepositApplication {
 		frame.setLocationRelativeTo(null);
 		frame.setModal(true);
 		frame.setVisible(true);
+		
+	}
+	
+	
+	public void viewSignature(byte[] signature)
+	{
+		ByteArrayInputStream in = new ByteArrayInputStream(signature);
+		
+		ImageIcon icon=null;
+		
+		try {
+			icon= new ImageIcon(filehandler.getScaledImage(ImageIO.read(in), 220, 204));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		JDialog signFrame = new JDialog();
+		signFrame.setSize(new Dimension(300, 300));
+		signFrame.setTitle("Term Deposit Application");
+		signFrame.setResizable(false);
+		signFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		JPanel signPanel = new JPanel();
+		signPanel.setBackground(new Color(143, 188, 143));
+		signPanel.setLayout(null);
+		
+		signFrame.setContentPane(signPanel);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBackground(Color.WHITE);
+		lblNewLabel.setBounds(45, 37, 220, 204);
+		signPanel.add(lblNewLabel);
+		
+		
+		JLabel lblSignature = new JLabel("Signature ");
+		
+		lblSignature.setBounds(34, 11, 105, 14);
+		lblNewLabel.setIcon(icon);
+		lblSignature.setBounds(34, 11, 105, 14);
+		signPanel.add(lblSignature);
+		signFrame.setLocationRelativeTo(null);
+		signFrame.setModal(true);
+		signFrame.setVisible(true);
 		
 	}
 //	
