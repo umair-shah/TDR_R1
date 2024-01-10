@@ -27,6 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.UIManager;
+import java.awt.SystemColor;
 
 public class MainMenu {
 //	public MainMenu() {
@@ -56,8 +57,8 @@ public class MainMenu {
 		
 		final JButton termDepositButton = new JButton("Term Deposit");
 		termDepositButton.setForeground(Color.BLACK);
-		termDepositButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		termDepositButton.setBackground(UIManager.getColor("Button.background"));
+		termDepositButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		termDepositButton.setBackground(new Color(46, 139, 87));
 		termDepositButton.setBounds(281, 215, 213, 50);
 		panel.add(termDepositButton);
 		
@@ -73,7 +74,7 @@ public class MainMenu {
 		newApplicationButton.setMinimumSize(new Dimension(200, 23));
 		newApplicationButton.setForeground(Color.BLACK);
 		newApplicationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		newApplicationButton.setBackground(UIManager.getColor("Button.background"));
+		newApplicationButton.setBackground(new Color(46, 139, 87));
 		newApplicationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SearchAccount sa = new SearchAccount();
@@ -88,7 +89,7 @@ public class MainMenu {
 		modifyApplicationButton.setMinimumSize(new Dimension(200, 23));
 		modifyApplicationButton.setForeground(Color.BLACK);
 		modifyApplicationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		modifyApplicationButton.setBackground(UIManager.getColor("Button.background"));
+		modifyApplicationButton.setBackground(new Color(46, 139, 87));
 		modifyApplicationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TermDepositSearch tds = new TermDepositSearch();
@@ -110,7 +111,7 @@ public class MainMenu {
 		tdrOpenning.setMinimumSize(new Dimension(200, 23));
 		tdrOpenning.setForeground(Color.BLACK);
 		tdrOpenning.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tdrOpenning.setBackground(UIManager.getColor("Button.background"));
+		tdrOpenning.setBackground(new Color(46, 139, 87));
 		tdrOpenning.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TermDepositSearch tds = new TermDepositSearch();
@@ -132,7 +133,7 @@ public class MainMenu {
 		tdrPreMatureEncashment.setMinimumSize(new Dimension(200, 23));
 		tdrPreMatureEncashment.setForeground(Color.BLACK);
 		tdrPreMatureEncashment.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		tdrPreMatureEncashment.setBackground(UIManager.getColor("Button.background"));
+		tdrPreMatureEncashment.setBackground(new Color(46, 139, 87));
 		tdrPreMatureEncashment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -153,7 +154,7 @@ public class MainMenu {
 		authorizeApplicationButton.setMinimumSize(new Dimension(200, 23));
 		authorizeApplicationButton.setForeground(Color.BLACK);
 		authorizeApplicationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		authorizeApplicationButton.setBackground(UIManager.getColor("Button.background"));
+		authorizeApplicationButton.setBackground(new Color(46, 139, 87));
 		authorizeApplicationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -169,7 +170,7 @@ public class MainMenu {
 		JButton setDateButton = new JButton("Set Date");
 	      setDateButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	      setDateButton.setForeground(Color.BLACK);
-	      setDateButton.setBackground(UIManager.getColor("Button.background"));
+	      setDateButton.setBackground(new Color(46, 139, 87));
 	      setDateButton.setBounds(590, 457, 133, 34);
 
 	      panel.add(setDateButton);
@@ -263,7 +264,7 @@ public class MainMenu {
 			tdrPreMatureAuthorizationButton.setMinimumSize(new Dimension(200, 23));
 			tdrPreMatureAuthorizationButton.setForeground(Color.BLACK);
 			tdrPreMatureAuthorizationButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			tdrPreMatureAuthorizationButton.setBackground(UIManager.getColor("Button.background"));
+			tdrPreMatureAuthorizationButton.setBackground(new Color(46, 139, 87));
 			tdrPreMatureAuthorizationButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					TermDepositSearch tds = new TermDepositSearch();
@@ -288,7 +289,7 @@ public class MainMenu {
 		});
 		signoutButton.setForeground(Color.BLACK);
 		signoutButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		signoutButton.setBackground(UIManager.getColor("Button.background"));
+		signoutButton.setBackground(new Color(46, 139, 87));
 		signoutButton.setBounds(590, 502, 133, 34);
 		panel.add(signoutButton);
 		
@@ -324,6 +325,78 @@ public class MainMenu {
 		JLabel lblBranchCode = new JLabel("Branch Code:");
 		lblBranchCode.setBounds(41, 14, 91, 14);
 		panel_1.add(lblBranchCode);
+		
+		JButton btnTradeFinance_1 = new JButton("Trade Finance");
+		btnTradeFinance_1.setEnabled(false);
+		btnTradeFinance_1.setForeground(Color.BLACK);
+		btnTradeFinance_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnTradeFinance_1.setBackground(new Color(46, 139, 87));
+		btnTradeFinance_1.setBounds(38, 215, 213, 50);
+		panel.add(btnTradeFinance_1);
+		
+		JButton btnCreditManagement_1 = new JButton("Credit Management");
+		btnCreditManagement_1.setEnabled(false);
+		btnCreditManagement_1.setForeground(Color.BLACK);
+		btnCreditManagement_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCreditManagement_1.setBackground(new Color(46, 139, 87));
+		btnCreditManagement_1.setBounds(530, 215, 213, 50);
+		panel.add(btnCreditManagement_1);
+		
+		JButton btnTradeFinance = new JButton("Setup");
+		btnTradeFinance.setEnabled(false);
+		btnTradeFinance.setForeground(Color.BLACK);
+		btnTradeFinance.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnTradeFinance.setBackground(new Color(46, 139, 87));
+		btnTradeFinance.setBounds(38, 92, 213, 66);
+		panel.add(btnTradeFinance);
+		
+		JButton btnCreditManagement = new JButton("CRM - Account Opening");
+		btnCreditManagement.setEnabled(false);
+		btnCreditManagement.setForeground(Color.BLACK);
+		btnCreditManagement.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCreditManagement.setBackground(new Color(46, 139, 87));
+		btnCreditManagement.setBounds(281, 92, 213, 31);
+		panel.add(btnCreditManagement);
+		
+		JButton btnCrmOperational = new JButton("CRM - Operational Activities");
+		btnCrmOperational.setEnabled(false);
+		btnCrmOperational.setForeground(Color.BLACK);
+		btnCrmOperational.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCrmOperational.setBackground(new Color(46, 139, 87));
+		btnCrmOperational.setBounds(281, 127, 213, 31);
+		panel.add(btnCrmOperational);
+		
+		JButton btnTeller = new JButton("Teller");
+		btnTeller.setEnabled(false);
+		btnTeller.setForeground(Color.BLACK);
+		btnTeller.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnTeller.setBackground(new Color(46, 139, 87));
+		btnTeller.setBounds(530, 92, 213, 66);
+		panel.add(btnTeller);
+		
+		JButton btnRemittances = new JButton("Remittances");
+		btnRemittances.setEnabled(false);
+		btnRemittances.setForeground(Color.BLACK);
+		btnRemittances.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnRemittances.setBackground(new Color(46, 139, 87));
+		btnRemittances.setBounds(38, 318, 213, 50);
+		panel.add(btnRemittances);
+		
+		JButton btnCustomerIdManagement = new JButton("Customer ID Management");
+		btnCustomerIdManagement.setEnabled(false);
+		btnCustomerIdManagement.setForeground(Color.BLACK);
+		btnCustomerIdManagement.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnCustomerIdManagement.setBackground(new Color(46, 139, 87));
+		btnCustomerIdManagement.setBounds(281, 318, 213, 50);
+		panel.add(btnCustomerIdManagement);
+		
+		JButton btnTransactionSecurity = new JButton("Transaction Security");
+		btnTransactionSecurity.setEnabled(false);
+		btnTransactionSecurity.setForeground(Color.BLACK);
+		btnTransactionSecurity.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnTransactionSecurity.setBackground(new Color(46, 139, 87));
+		btnTransactionSecurity.setBounds(530, 318, 213, 50);
+		panel.add(btnTransactionSecurity);
 		if(Session.getUserRoleId() == 1)
 		{
 			newApplicationButton.setVisible(true);

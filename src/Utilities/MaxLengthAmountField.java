@@ -11,20 +11,22 @@ import java.awt.*;
 
 public class MaxLengthAmountField extends JTextField {
 	
-	public MaxLengthAmountField(int columns) {
-        super(columns);
+	public MaxLengthAmountField(int columns, final int digitsBeforeDecimal, final int digitsAfterDecimal) {
+	    super(columns);
 
-        ((AbstractDocument) getDocument()).setDocumentFilter(new DocumentFilter() {
-            @Override
-            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-                String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+	    ((AbstractDocument) getDocument()).setDocumentFilter(new DocumentFilter() {
+	        @Override
+	        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+	            String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
 
-                if ((currentText + text).matches("^\\d{0,16}(\\.\\d{0,2})?$")) {
-                    super.replace(fb, offset, length, text, attrs);
-                }
-            }
-        });
-    }
+	            String regex = "^\\d{0," + digitsBeforeDecimal + "}(\\.\\d{0," + digitsAfterDecimal + "})?$";
+	            if ((currentText + text).matches(regex)) {
+	                super.replace(fb, offset, length, text, attrs);
+	            }
+	        }
+	    });
+	}
+  
 
 	/**
 	 * @param args

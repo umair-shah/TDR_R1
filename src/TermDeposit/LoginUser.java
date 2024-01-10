@@ -71,10 +71,6 @@ public class LoginUser {
 		
 		panel.repaint();
 		
-		passwordField = new MaxLengthPwdField(10);
-		passwordField.setBounds(403, 221, 200, 20);
-		panel.add(passwordField);
-		
 		logoLabel = new JLabel("");
 		ImageIcon logoIcon = new ImageIcon("C:/Users/Mhammad.27388/Desktop/logo.png");
 		Image scaledLogoImage = logoIcon.getImage().getScaledInstance(300, 300, Image.SCALE_SMOOTH);
@@ -86,27 +82,33 @@ public class LoginUser {
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(143, 188, 143));
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Login", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(344, 131, 294, 194);
+		panel_1.setBounds(355, 131, 276, 194);
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		userIDField = new MaxLengthTextField(10);
-		userIDField.setBounds(128, 37, 133, 20);
+		userIDField.setBounds(118, 37, 133, 20);
 		panel_1.add(userIDField);
 		userIDField.setColumns(10);
 		branchCodeField = new MaxLengthNumericField(4);
-		branchCodeField.setBounds(58, 37, 60, 20);
+		branchCodeField.setBounds(48, 37, 60, 20);
 		panel_1.add(branchCodeField);
 		branchCodeField.setToolTipText("");
 		branchCodeField.setColumns(10);
 		
 		JButton loginButton = new JButton("Login");
-		loginButton.setBounds(58, 148, 89, 23);
+		loginButton.setBackground(new Color(46, 139, 87));
+		loginButton.setBounds(48, 135, 99, 36);
 		panel_1.add(loginButton);
 		
 		JButton exitButton = new JButton("Exit");
-		exitButton.setBounds(172, 148, 89, 23);
+		exitButton.setBackground(new Color(46, 139, 87));
+		exitButton.setBounds(172, 135, 89, 36);
 		panel_1.add(exitButton);
+		
+		passwordField = new MaxLengthPwdField(10);
+		passwordField.setBounds(48, 83, 203, 20);
+		panel_1.add(passwordField);
 		
 		frame.setVisible(true);
 		

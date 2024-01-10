@@ -44,6 +44,7 @@ import java.io.IOException;
 import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+import javax.swing.JCheckBox;
 public class TermDepositApplication {
 	private JDialog frame;
 	private JPanel panel;
@@ -81,7 +82,7 @@ public class TermDepositApplication {
 	private JButton btnOpenTDR;
 	private UploadFile filehandler;
 	private JTable tdrOpeningVoucher;
-	JTextField tdrRateField;
+	private MaxLengthAmountField tdrRateField;
 	private JLabel tdrRate;
 	TermDepositApplicationService tdrService;
 	private JPanel panel_2;
@@ -90,7 +91,7 @@ public class TermDepositApplication {
 	private JPanel panel_5;
 	private JPanel panel_6;
 	private JPanel panel_1;
-	
+	private JCheckBox specialRateCheckBox;
 	
 	public TermDepositApplication()
 	{
@@ -195,7 +196,7 @@ public class TermDepositApplication {
 		accountTitleField.setColumns(10);
 		
 		JLabel lblSignature = new JLabel("Signature");
-		lblSignature.setBounds(314, 22, 46, 14);
+		lblSignature.setBounds(314, 22, 74, 14);
 		panel_1.add(lblSignature);
 		
 
@@ -208,11 +209,11 @@ public class TermDepositApplication {
 		panel_2.setLayout(null);
 		
 		lblModeOfFund = new JLabel("Mode of Fund");
-		lblModeOfFund.setBounds(282, 59, 96, 14);
+		lblModeOfFund.setBounds(282, 28, 96, 14);
 		panel_2.add(lblModeOfFund);
 		
 		modeOfFundComboBox = new JComboBox<ComboItem>();
-		modeOfFundComboBox.setBounds(378, 56, 170, 20);
+		modeOfFundComboBox.setBounds(378, 25, 170, 20);
 		panel_2.add(modeOfFundComboBox);
 
 		
@@ -221,12 +222,12 @@ public class TermDepositApplication {
 		lblTotalAmount.setBounds(10, 59, 96, 14);
 		panel_2.add(lblTotalAmount);
 		
-		totalAmountField = new MaxLengthAmountField(16);
+		totalAmountField = new MaxLengthAmountField(16,16,2);
 		totalAmountField.setBounds(96, 56, 161, 20);
 		panel_2.add(totalAmountField);
 		totalAmountField.setColumns(10);
 		
-		tdrRate = new JLabel("TDR Rate");
+		tdrRate = new JLabel("TDR Rate (%)");
 		tdrRate.setBounds(282, 87, 96, 14);
 		panel_2.add(tdrRate);
 		
@@ -238,7 +239,7 @@ public class TermDepositApplication {
 		tenureComboBox.setBounds(96, 84, 161, 20);
 		panel_2.add(tenureComboBox);
 		
-		tdrRateField = new JTextField();
+		tdrRateField = new MaxLengthAmountField(4,2,2);
 		tdrRateField.setBounds(378, 84, 170, 20);
 		panel_2.add(tdrRateField);
 		tdrRateField.setColumns(10);
@@ -280,6 +281,15 @@ public class TermDepositApplication {
 		panel_2.add(dateField);
 		dateField.setEditable(false);
 		dateField.setColumns(10);
+		
+		specialRateCheckBox = new JCheckBox("Apply Special Rate");
+		specialRateCheckBox.setBackground(new Color(143, 188, 143));
+		specialRateCheckBox.setBounds(378, 52, 170, 21);
+		panel_2.add(specialRateCheckBox);
+		
+		JLabel lblSpecialRate = new JLabel("Special Rate");
+		lblSpecialRate.setBounds(282, 59, 96, 14);
+		panel_2.add(lblSpecialRate);
 		
 		panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Upload File", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -476,7 +486,7 @@ public class TermDepositApplication {
 			public void actionPerformed(ActionEvent e)
 			{
 				ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
-				tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString() + " %");
+				tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
 			}
 		});
 		updateButton.addActionListener(new ActionListener() {
@@ -632,8 +642,24 @@ public class TermDepositApplication {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				tdrRateField.setText("");
 				ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
-				tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString() + " %");
+				tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
+			}
+		});
+		specialRateCheckBox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				tdrRateField.setEditable(specialRateCheckBox.isSelected());
+				if(!(specialRateCheckBox.isSelected()))
+				{
+					tdrRateField.setText("");
+					ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
+					tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
+				}
+					
 			}
 		});
 		tdrRateField.setEditable(false);
@@ -669,7 +695,10 @@ public class TermDepositApplication {
 			{
 				JOptionPane.showMessageDialog(frame, "Action at Maturity not Selected","Select Action at Maturity",JOptionPane.ERROR_MESSAGE);
 			}
-
+			else if(tdrRateField.getText().isEmpty())
+			{
+				JOptionPane.showMessageDialog(frame, "Rate not entered","Enter TDR Rate",JOptionPane.ERROR_MESSAGE);
+			}
 			
 			
 			else if(Float.parseFloat(totalAmountField.getText()) > accountDTO.GetBalance())
@@ -1074,7 +1103,7 @@ public class TermDepositApplication {
 		lblProfitPaid.setBounds(10, 11, 86, 14);
 		panel_5.add(lblProfitPaid);
 		
-		MaxLengthAmountField profitPaidField = new MaxLengthAmountField(16);
+		MaxLengthAmountField profitPaidField = new MaxLengthAmountField(16,16,2);
 		profitPaidField.setBounds(119, 8, 157, 20);
 		panel_5.add(profitPaidField);
 		profitPaidField.setColumns(10);
@@ -1083,7 +1112,7 @@ public class TermDepositApplication {
 		lblProfitPayable.setBounds(298, 11, 110, 14);
 		panel_5.add(lblProfitPayable);
 		
-		MaxLengthAmountField profitPayableField = new MaxLengthAmountField(16);
+		MaxLengthAmountField profitPayableField = new MaxLengthAmountField(16,16,2);
 		profitPayableField.setBounds(406, 8, 157, 20);
 		panel_5.add(profitPayableField);
 		profitPayableField.setColumns(10);
