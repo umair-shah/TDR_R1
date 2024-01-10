@@ -20,6 +20,12 @@ public class TermDepositApplicationDTO {
 	private AccountDTO tdrAccount;
 	private float tdrRate;
 	private String tdrDealID;
+	private boolean IsSpecialRate = false;
+	
+	public void SetIsSpecialRate(boolean IsSpecialRate)
+	{
+		this.IsSpecialRate = IsSpecialRate;
+	}
 	public void SetApplicationDate(String applicationDate)
 	{
 		this.applicationDate = applicationDate;
@@ -93,6 +99,10 @@ public class TermDepositApplicationDTO {
 		this.tdrRate=tdrRate;
 	}
 	
+	public boolean GetIsSpecialRate()
+	{
+		return IsSpecialRate;
+	}
 	public String GetApplicationDate()
 	{
 		return applicationDate;

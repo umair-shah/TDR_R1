@@ -260,7 +260,7 @@ public class TermDepositApplicationService {
 		String applicationNo=null;
 		Connection lcl_conn_dt = utility.db_conn();
 
-        String insertQuery = "SELECT lpad(APPLICATION_ID,5,'0'),Year(Application_date) FROM FINAL TABLE (INSERT INTO TDR_Application (Holder_name,Amount,Input_by,Maturity_date,Application_date,TDR_Request_DOC,TDR_App_status,Product_Id,Maturity_Action,Mode_of_fund,Principal_Fund_Crd_Acc_ID,Prof_Nom_Acc_ID,TDR_Request_Doc_Name,Account_ID,Last_payout_date ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?))";
+        String insertQuery = "SELECT lpad(APPLICATION_ID,5,'0'),Year(Application_date) FROM FINAL TABLE (INSERT INTO TDR_Application (Holder_name,Amount,Input_by,Maturity_date,Application_date,TDR_Request_DOC,TDR_App_status,Product_Id,Maturity_Action,Mode_of_fund,Principal_Fund_Crd_Acc_ID,Prof_Nom_Acc_ID,TDR_Request_Doc_Name,Account_ID,Last_payout_date, Special_Rate ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?))";
         
         try {
     		
@@ -281,7 +281,7 @@ public class TermDepositApplicationService {
         	preparedStatement1.setString(13,TDADTO.GetFileName());
         	preparedStatement1.setString(14,TDADTO.GetAccountID());
         	preparedStatement1.setString(15,utility.addMonthToDate(todayDate, 1));
-
+        	preparedStatement1.setFloat(16,TDADTO.GetTDRRate());
             
         	
 
@@ -325,7 +325,8 @@ public class TermDepositApplicationService {
 		ComboItem selectedMaturityAction= TDADTO.GetSelectedMaturityAction();
 		Connection lcl_conn_dt = utility.db_conn();
 
-        String query = "update TDR_Application set Amount= ? ,Input_by= ?,Maturity_date= ?,Application_date= ?,TDR_Request_DOC= ? ,Product_Id =? ,Maturity_Action =? ,Mode_of_fund =? ,Principal_Fund_Crd_Acc_Id =? ,Prof_Nom_Acc_Id =? ,TDR_Request_Doc_Name =?  where application_id= ? ";
+        String query = "update TDR_Application set Amount= ? ,Input_by= ?,Maturity_date= ?,Application_date= ?,TDR_Request_DOC= ? ,Product_Id =? ,Maturity_Action =? ,Mode_of_fund =? ," +
+        		"Principal_Fund_Crd_Acc_Id =? ,Prof_Nom_Acc_Id =? ,TDR_Request_Doc_Name =?, SPECIAL_RATE = ? where application_id= ? ";
         String updateBlockAmnt="Update Account_tl set block_Amnt=block_Amnt+ ? where account_id= ? and balance >= ? ";
       
         try {
@@ -346,7 +347,8 @@ public class TermDepositApplicationService {
             preparedStatement.setLong(9,Long.parseLong(TDADTO.GetAccountID()));
             preparedStatement.setLong(10,Long.parseLong(TDADTO.GetAccountID()));
             preparedStatement.setString(11,TDADTO.GetFileName());
-            preparedStatement.setInt(12,Integer.parseInt(TDADTO.GetApplicationNo().substring(0,5)));
+            preparedStatement.setFloat(12, TDADTO.GetTDRRate());
+            preparedStatement.setInt(13,Integer.parseInt(TDADTO.GetApplicationNo().substring(0,5)));
             
         	preparedStatement1.setFloat(1, diff);
         	preparedStatement1.setInt(2, Integer.parseInt(TDADTO.GetAccountID()));

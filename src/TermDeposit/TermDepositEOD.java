@@ -182,8 +182,15 @@ public class TermDepositEOD {
 		//String TaxUpdateCustAccount="Update account_tl set balance=balance- ?  where account_id =?";
 		String TaxUpdateTaxAccount="Update internal_account_tl set balance=balance+ ?  where internal_account_id =2";
 		float taxRate= (float) (TDRSS.getTaxRate()/ 100.0);
-		
-		float profitToBePaid = (float)(((TDRs.getFloat("amount") * TDRs.getFloat("TDR_RATE") / 100.0)*(1.0 / TDRs.getFloat("Tenure"))));
+		float profitToBePaid;
+		if(TDRs.getFloat("SPECIAL_RATE") > 0)
+		{
+			profitToBePaid = (float)(((TDRs.getFloat("amount") * TDRs.getFloat("SPECIAL_RATE") / 100.0)*(1.0 / TDRs.getFloat("Tenure"))));
+		}
+		else
+		{
+			profitToBePaid = (float)(((TDRs.getFloat("amount") * TDRs.getFloat("TDR_RATE") / 100.0)*(1.0 / TDRs.getFloat("Tenure"))));
+		}
 		float Tax = (float) (profitToBePaid * taxRate);
 		
 		PreparedStatement preparedStatement7 = lcl_conn_dt.prepareStatement(ProfitFundVoucher);
@@ -276,7 +283,15 @@ public class TermDepositEOD {
 		String TDRAppStatusUpdateQuery="update tdr_application set tdr_app_status=(Select ID from tdr_status where DESC='Maturity Closed') where application_id = ?";
 		String TDRDealStatusUpdateQuery="update tdr_deal set deal_status =(Select ID from tdr_deal_status where DESC='Maturity Closed') where tdr_app_id = ?";
 
-		float profitToBePaid = (float)(TDRs.getFloat("amount") *  TDRs.getFloat("TDR_RATE") / 100.0);
+		float profitToBePaid;
+		if(TDRs.getFloat("SPECIAL_RATE") > 0)
+		{
+			profitToBePaid = (float)(TDRs.getFloat("amount") *  TDRs.getFloat("SPECIAL_RATE") / 100.0);
+		}
+		else
+		{
+			profitToBePaid = (float)(TDRs.getFloat("amount") *  TDRs.getFloat("TDR_RATE") / 100.0);
+		}
 		float taxRate= (float) (TDRSS.getTaxRate()/100.0);
 		float Tax = (float) (profitToBePaid * taxRate);
 		

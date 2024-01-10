@@ -75,7 +75,7 @@ public class TermDepositSearchService {
 		
 		String tdrAppQuery = "SELECT B.brn_cd||lpad(At.acc_type_cd,4,'0')||C.Customer_no||lpad(acc.run_no,2,'0') ||" +
 				"acc.Check_digit As Account_No,acc.account_id,acc.title,B.Brn_cd,B.Brn_Name,Curr.Currency_name,acc.balance, acc.signature, " +
-				"tdr.application_date,tdr.Amount,tdr.TDR_Request_Doc,tdr.TDR_Request_Doc_Name,tdr.mode_of_fund,tdr.maturity_action,tdr.product_id,tp.tdr_rate " +
+				"tdr.application_date,tdr.Amount,tdr.TDR_Request_Doc,tdr.TDR_Request_Doc_Name,tdr.mode_of_fund,tdr.maturity_action,tdr.product_id,tp.tdr_rate, tdr.Special_Rate " +
 				"from TDR_Application tdr INNER JOIN Account_tl acc ON tdr.account_id=acc.account_id INNER JOIN Branch_tl B ON B.brn_ID=acc.brn_Id " +
 				"INNER JOIN Customer C ON acc.Customer_id=C.Customer_id INNER JOIN account_type At ON At.acc_type_id=acc.acc_type_id INNER JOIN Currency " +
 				"curr ON acc.curr_cd_id = curr.ID inner join tdr_product tp " +
@@ -116,7 +116,15 @@ public class TermDepositSearchService {
         	 tdrAppDto.SetSelectedMOF(new ComboItem(TDRAppDetail.getInt("Mode_of_Fund"),"test"));
         	 tdrAppDto.SetSelectedTenure(new ComboItem(TDRAppDetail.getInt("product_id"),"test"));
         	 tdrAppDto.SetTDRAccountID(GetTDRAccount(TDRAppDetail.getString("Account_no")));
-        	 tdrAppDto.SetTDRRate(TDRAppDetail.getFloat("TDR_RATE"));
+        	 if(TDRAppDetail.getFloat("SPECIAL_RATE") > 0)
+        	 {
+        		 tdrAppDto.SetTDRRate(TDRAppDetail.getFloat("SPECIAL_RATE"));
+        		 tdrAppDto.SetIsSpecialRate(true);
+        	 }
+        	 else
+        	 {
+        		 tdrAppDto.SetTDRRate(TDRAppDetail.getFloat("TDR_RATE"));
+        	 }
         	 tdrAppDto.SetTdrAccount(tdrFundAcc);
          }
         }
@@ -132,7 +140,7 @@ public class TermDepositSearchService {
 		ResultSet TDRAppDetail=null;
 		String tdrAppQuery = "SELECT B.brn_cd||lpad(At.acc_type_cd,4,'0')||C.Customer_no||lpad(acc.run_no,2,'0') ||" +
 				"acc.Check_digit As Account_No,acc.account_id,acc.title,B.Brn_cd,B.Brn_Name,Curr.Currency_name,acc.balance,lpad(tdr.application_id,5,'0')||c.Customer_no||Year(td.deal_date) As Application_no," +
-				"td.deal_id,tdr.application_date,tdr.Amount,tdr.TDR_Request_Doc,tdr.TDR_Request_Doc_Name,tdr.mode_of_fund,tdr.maturity_action,tdr.product_id,tp.tdr_rate acc.signature " +
+				"td.deal_id,tdr.application_date,tdr.Amount,tdr.TDR_Request_Doc,tdr.TDR_Request_Doc_Name,tdr.mode_of_fund,tdr.maturity_action,tdr.product_id,tp.tdr_rate, acc.signature, tdr.SPECIAL_RATE " +
 				"from TDR_Application tdr INNER JOIN Account_tl acc ON tdr.account_id=acc.account_id INNER JOIN Branch_tl B ON B.brn_ID=acc.brn_Id " +
 				"INNER JOIN Customer C ON acc.Customer_id=C.Customer_id INNER JOIN account_type At ON At.acc_type_id=acc.acc_type_id INNER JOIN Currency " +
 				"curr ON acc.curr_cd_id = curr.ID inner join tdr_deal td on td.tdr_app_id = tdr.application_id inner join tdr_product tp " +
@@ -177,8 +185,16 @@ public class TermDepositSearchService {
         	 tdrAppDto.SetSelectedTenure(new ComboItem(TDRAppDetail.getInt("product_id"),"test"));
         	 tdrAppDto.SetTDRAccountID(GetTDRAccount(TDRAppDetail.getString("Account_no")));
         	 tdrAppDto.SetTdrAccount(tdrFundAcc);
-        	 tdrAppDto.SetTDRRate(TDRAppDetail.getFloat("TDR_RATE"));
         	 tdrAppDto.SetTDRDealId(TDRAppDetail.getString("Deal_id"));
+        	 if(TDRAppDetail.getFloat("SPECIAL_RATE") > 0)
+        	 {
+        		 tdrAppDto.SetTDRRate(TDRAppDetail.getFloat("SPECIAL_RATE"));
+        		 tdrAppDto.SetIsSpecialRate(true);
+        	 }
+        	 else
+        	 {
+        		 tdrAppDto.SetTDRRate(TDRAppDetail.getFloat("TDR_RATE"));
+        	 }
         	 
          }
         }

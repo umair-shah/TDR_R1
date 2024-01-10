@@ -187,6 +187,7 @@ public class TermDepositSearch {
 			};
 
 		JTable termDepositTable = new JTable(model);
+		termDepositTable.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane = new JScrollPane(termDepositTable);
 		jScrollPane.setForeground(Color.BLACK);
 		jScrollPane.setLocation(31, 44);
@@ -274,6 +275,7 @@ public class TermDepositSearch {
 			};
 			
 		JTable termDepositTable = new JTable(model);
+		termDepositTable.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane = new JScrollPane(termDepositTable);
 		jScrollPane.setForeground(Color.BLACK);
 		jScrollPane.setLocation(31, 44);

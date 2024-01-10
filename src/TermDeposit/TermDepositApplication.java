@@ -92,6 +92,7 @@ public class TermDepositApplication {
 	private JPanel panel_6;
 	private JPanel panel_1;
 	private JCheckBox specialRateCheckBox;
+	private JComboBox<ComboItem> prematureReasonComboBox;
 	
 	public TermDepositApplication()
 	{
@@ -480,13 +481,38 @@ public class TermDepositApplication {
 		lblFileName.setText(TDRAppDto.GetFileName());
 		tdrRateField.setText(String.valueOf(TDRAppDto.GetTDRRate()));
 		tdrRateField.setEditable(false);
+		if(TDRAppDto.GetIsSpecialRate())
+		{
+			specialRateCheckBox.setSelected(true);
+			tdrRateField.setEditable(true);
+		}
 		tenureComboBox.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
-				tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
+				if(!(specialRateCheckBox.isSelected()))
+				{
+					tdrRateField.setText("");
+					ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
+					tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
+				}
+			}
+		});
+		
+		specialRateCheckBox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				tdrRateField.setEditable(specialRateCheckBox.isSelected());
+				if(!(specialRateCheckBox.isSelected()))
+				{
+					tdrRateField.setText("");
+					ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
+					tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
+				}
+					
 			}
 		});
 		updateButton.addActionListener(new ActionListener() {
@@ -521,6 +547,10 @@ public class TermDepositApplication {
 			{
 				JOptionPane.showMessageDialog(frame, "Action at Maturity not Selected","Select Action at Maturity",JOptionPane.ERROR_MESSAGE);
 			}
+			else if(tdrRateField.getText().isEmpty())
+			{
+				JOptionPane.showMessageDialog(frame, "Enter TDR Rate", "Rate not entered", JOptionPane.ERROR_MESSAGE);
+			}
 			
 			else if(Float.parseFloat(totalAmountField.getText()) > accdto.GetBalance() )
 			{
@@ -531,7 +561,10 @@ public class TermDepositApplication {
 			{
 				JOptionPane.showMessageDialog(frame, "Enter TDR Amount greater than 10000 (Min Limit)"," Invalid TDR Amount",JOptionPane.ERROR_MESSAGE);
 			}
-			
+			else if(Float.parseFloat(tdrRateField.getText()) == 0)
+			{
+				JOptionPane.showMessageDialog(frame, "Enter TDR Rate greater than 0.0", "Invalid Rate",JOptionPane.ERROR_MESSAGE);
+			}
 			else{
 			TermDepositApplicationDTO TDADTO = new TermDepositApplicationDTO();
 			TDADTO.SetApplicationDate(dateField.getText());
@@ -545,6 +578,10 @@ public class TermDepositApplication {
 			TDADTO.SetAccountNo(accdto.GetAccountNo());
 			TDADTO.SetAccountID(accdto.GetAccountID());
 			TDADTO.SetApplicationNo(TDRAppDto.GetApplicationNo());
+			if(specialRateCheckBox.isSelected())
+			{
+				TDADTO.SetTDRRate(Float.parseFloat(tdrRateField.getText()));
+			}
 			if(filehandler.path != null)
 			{
 				File file = new File(filehandler.path);	
@@ -642,9 +679,12 @@ public class TermDepositApplication {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				tdrRateField.setText("");
-				ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
-				tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
+				if(!(specialRateCheckBox.isSelected()))
+				{
+					tdrRateField.setText("");
+					ComboItem selectedTenure= (ComboItem) tenureComboBox.getSelectedItem();
+					tdrRateField.setText(tdrService.GetTDRRate(selectedTenure.getId()).toString());
+				}
 			}
 		});
 		specialRateCheckBox.addActionListener(new ActionListener()
@@ -697,9 +737,8 @@ public class TermDepositApplication {
 			}
 			else if(tdrRateField.getText().isEmpty())
 			{
-				JOptionPane.showMessageDialog(frame, "Rate not entered","Enter TDR Rate",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(frame, "Enter TDR Rate", "Rate not entered", JOptionPane.ERROR_MESSAGE);
 			}
-			
 			
 			else if(Float.parseFloat(totalAmountField.getText()) > accountDTO.GetBalance())
 			{
@@ -712,6 +751,10 @@ public class TermDepositApplication {
 			else if(Float.parseFloat(totalAmountField.getText()) < 10000 )
 			{
 				JOptionPane.showMessageDialog(frame, "Enter TDR Amount greater than 10000 (Min Limit)"," Invalid TDR Amount",JOptionPane.ERROR_MESSAGE);
+			}
+			else if(Float.parseFloat(tdrRateField.getText()) == 0)
+			{
+				JOptionPane.showMessageDialog(frame, "Enter TDR Rate greater than 0.0", "Invalid Rate",JOptionPane.ERROR_MESSAGE);
 			}
 			else
 			{
@@ -728,6 +771,10 @@ public class TermDepositApplication {
 			TDADTO.SetProfitNomAccount(profitNomAccountField.getText());
 			TDADTO.SetAccountNo(accountDTO.GetAccountNo());
 			TDADTO.SetAccountID(accountDTO.GetAccountID());
+			if(specialRateCheckBox.isSelected())
+			{
+				TDADTO.SetTDRRate(Float.parseFloat(tdrRateField.getText()));
+			}
 			try {
 				TDADTO.SetFiledata(filehandler.readFileData(file), file.getName());
 			} catch (IOException e) {
@@ -833,7 +880,11 @@ public class TermDepositApplication {
 		profitNomAccountField.setText(TDRAppDto.GetProfitNomAccount());
 		principalFundCrField.setText(TDRAppDto.GetPrincipalFundCrAccount());
 		lblFileName.setText(TDRAppDto.GetFileName());
-		
+		if(TDRAppDto.GetIsSpecialRate())
+		{
+			specialRateCheckBox.setSelected(true);
+		}
+		specialRateCheckBox.setEnabled(false);
 		modeOfFundComboBox.setEnabled(false);
 		totalAmountField.setEditable(false);
 		tenureComboBox.setEnabled(false);
@@ -943,7 +994,11 @@ public class TermDepositApplication {
 		profitNomAccountField.setText(TDRAppDto.GetProfitNomAccount());
 		principalFundCrField.setText(TDRAppDto.GetPrincipalFundCrAccount());
 		lblFileName.setText(TDRAppDto.GetFileName());
-		
+		if(TDRAppDto.GetIsSpecialRate())
+		{
+			specialRateCheckBox.setSelected(true);
+		}
+		specialRateCheckBox.setEnabled(false);
 		modeOfFundComboBox.setEnabled(false);
 		totalAmountField.setEditable(false);
 		tenureComboBox.setEnabled(false);
@@ -1086,6 +1141,11 @@ public class TermDepositApplication {
 		lblFileName.setText(TDRAppDto.GetFileName());
 		tdrRateField.setText(String.valueOf(TDRAppDto.GetTDRRate()));
 		tdrRateField.setEditable(false);
+		if(TDRAppDto.GetIsSpecialRate())
+		{
+			specialRateCheckBox.setSelected(true);
+		}
+		specialRateCheckBox.setEnabled(false);
 		modeOfFundComboBox.setEnabled(false);
 		totalAmountField.setEditable(false);
 		tenureComboBox.setEnabled(false);
@@ -1100,31 +1160,44 @@ public class TermDepositApplication {
 		panel_5.setLayout(null);
 		
 		JLabel lblProfitPaid = new JLabel("Profit Paid");
-		lblProfitPaid.setBounds(10, 11, 86, 14);
+		lblProfitPaid.setBounds(10, 54, 86, 14);
 		panel_5.add(lblProfitPaid);
 		
 		MaxLengthAmountField profitPaidField = new MaxLengthAmountField(16,16,2);
-		profitPaidField.setBounds(119, 8, 157, 20);
+		profitPaidField.setBounds(119, 51, 157, 20);
 		panel_5.add(profitPaidField);
 		profitPaidField.setColumns(10);
 		
 		JLabel lblProfitPayable = new JLabel("Profit Payable");
-		lblProfitPayable.setBounds(298, 11, 110, 14);
+		lblProfitPayable.setBounds(298, 14, 110, 14);
 		panel_5.add(lblProfitPayable);
 		
 		MaxLengthAmountField profitPayableField = new MaxLengthAmountField(16,16,2);
-		profitPayableField.setBounds(406, 8, 157, 20);
+		profitPayableField.setBounds(406, 11, 157, 20);
 		panel_5.add(profitPayableField);
 		profitPayableField.setColumns(10);
 		
 		JLabel lblPayableAmount = new JLabel("Payable Amount");
-		lblPayableAmount.setBounds(10, 57, 96, 14);
+		lblPayableAmount.setBounds(296, 57, 96, 14);
 		panel_5.add(lblPayableAmount);
 		
 		JTextField payableAmountField = new JTextField();
-		payableAmountField.setBounds(119, 54, 158, 20);
+		payableAmountField.setBounds(405, 54, 158, 20);
 		panel_5.add(payableAmountField);
 		payableAmountField.setColumns(10);
+		
+		JLabel lblReasonOfPremature = new JLabel("Reason");
+		lblReasonOfPremature.setBounds(10, 17, 110, 14);
+		panel_5.add(lblReasonOfPremature);
+		
+		prematureReasonComboBox = new JComboBox<ComboItem>();
+		prematureReasonComboBox.setBounds(119, 11, 157, 20);
+		prematureReasonComboBox.addItem(new ComboItem(0,"Select Reason"));
+		prematureReasonComboBox.addItem(new ComboItem(1,"Requested By Customer"));
+		panel_5.add(prematureReasonComboBox);
+		
+		prematureReasonComboBox.setSelectedItem(prematureReasonComboBox.getItemAt(1));
+		prematureReasonComboBox.setEnabled(false);
 		
 		panel_6 = new JPanel();
 		panel_6.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -1194,16 +1267,25 @@ public class TermDepositApplication {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					String dealno= tdrService.UpdateTDRPreEncashment(TDRAppDto);
-					if(dealno != null)
+					ComboItem prematureReasonComboItem = (ComboItem) prematureReasonComboBox.getSelectedItem();
+					if(prematureReasonComboItem.getId() == 0)
 					{
-						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction generated Successfully \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal No = "+dealno,"Successful",JOptionPane.INFORMATION_MESSAGE);
-						frame.dispose();
+						JOptionPane.showMessageDialog(frame, "Select Reason to Premature Deal","Reason of Premature not Slected",JOptionPane.ERROR_MESSAGE);	
 					}
-					else{
-						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
-						frame.dispose();
+					else
+					{
+						String dealno= tdrService.UpdateTDRPreEncashment(TDRAppDto);
+						if(dealno != null)
+						{
+							JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction generated Successfully \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal No = "+dealno,"Successful",JOptionPane.INFORMATION_MESSAGE);
+							frame.dispose();
+						}
+						else{
+							JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Transaction UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
+							frame.dispose();
+						}
 					}
+					
 				}
 			});
 		}
@@ -1219,7 +1301,6 @@ public class TermDepositApplication {
 				@Override
 				public void actionPerformed(ActionEvent e)
 				{
-					
 					String dealno= tdrService.PrematureEncashmentTransaction(TDRAppDto,paidprofit,actualProfit);
 					if(dealno != null)
 					{
@@ -1235,12 +1316,10 @@ public class TermDepositApplication {
 						panel.setBackground(new Color(143, 188, 143));
 						frame.getContentPane().add(panel, BorderLayout.CENTER);
 						panel.setLayout(null);
-
-						String[] columnNames = {"S.No", "Account No", "Account Title", "Debit", "Credit"};
+							String[] columnNames = {"S.No", "Account No", "Account Title", "Debit", "Credit"};
 					
-
-						Object[][] data = tdrService.GetTDRPreMatureVoucher(TDRAppDto);
-							
+							Object[][] data = tdrService.GetTDRPreMatureVoucher(TDRAppDto);
+								
 						
 						DefaultTableModel model = new DefaultTableModel(data, columnNames){
 							 public boolean isCellEditable(int row, int column)
@@ -1278,8 +1357,9 @@ public class TermDepositApplication {
 						frame.dispose();
 					}
 				}
+
 			});
-		}
+	}
 		frame.setContentPane(panel);
 		frame.setLocationRelativeTo(null);
 		frame.setModal(true);
