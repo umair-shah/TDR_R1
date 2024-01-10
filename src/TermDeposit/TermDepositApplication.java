@@ -47,6 +47,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.JCheckBox;
 public class TermDepositApplication {
 	private JDialog frame;
+	private JDialog signFrame;
 	private JPanel panel;
 	private JTextField accountTitleField;
 	private JTextField branchNameField;
@@ -616,7 +617,7 @@ public class TermDepositApplication {
 		
 		frame.setContentPane(panel);
 		frame.setLocationRelativeTo(null);
-		frame.setModal(false);
+		frame.setModal(true);
 		frame.setVisible(true);
 	}
 	
@@ -1083,6 +1084,7 @@ public class TermDepositApplication {
 	{
 		final AccountDTO accdto=TDRAppDto.GetAccountDTO();
 		JButton prematureEncashmentButton;
+		JButton rejectPrematureEncashment;
 		filehandler=new UploadFile();
 		frame.resize(599,711);
 		btnViewFile = new JButton("View File");
@@ -1293,9 +1295,30 @@ public class TermDepositApplication {
 		{
 			final float paidprofit=totalProfitPaid;
 			final float actualProfit=payableProfit;
-			prematureEncashmentButton = new JButton("Authorize Pre Mature");
-			prematureEncashmentButton.setBounds(188, 11, 197, 23);
+			prematureEncashmentButton = new JButton("Authorize");
+			prematureEncashmentButton.setBounds(20, 11, 197, 23);
+			rejectPrematureEncashment= new JButton("Reject");
+			rejectPrematureEncashment.setBounds(350, 11, 197, 23);
 			panel_6.add(prematureEncashmentButton);
+			panel_6.add(rejectPrematureEncashment);
+			
+			rejectPrematureEncashment.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent e)
+				{
+					String dealno= tdrService.RejectTDRPreEncashment(TDRAppDto);
+					if(dealno != null)
+					{
+						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Request Rejected \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal No = "+dealno,"Successful",JOptionPane.INFORMATION_MESSAGE);
+						frame.dispose();
+					}
+					else{
+						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Request Rejected UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
+						frame.dispose();
+					}
+				}
+			});
 			prematureEncashmentButton.addActionListener(new ActionListener()
 			{
 				@Override
@@ -1381,9 +1404,9 @@ public class TermDepositApplication {
 			e.printStackTrace();
 		}
 		
-		JDialog signFrame = new JDialog();
+		signFrame = new JDialog(frame,"Signature",false);
 		signFrame.setSize(new Dimension(300, 300));
-		signFrame.setTitle("Term Deposit Application");
+		signFrame.setTitle("Customer Signature");
 		signFrame.setResizable(false);
 		signFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JPanel signPanel = new JPanel();
@@ -1405,7 +1428,6 @@ public class TermDepositApplication {
 		lblSignature.setBounds(34, 11, 105, 14);
 		signPanel.add(lblSignature);
 		signFrame.setLocationRelativeTo(null);
-		signFrame.setModal(true);
 		signFrame.setVisible(true);
 		
 	}

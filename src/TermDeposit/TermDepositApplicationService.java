@@ -1151,7 +1151,39 @@ public class TermDepositApplicationService {
 		}
 	}
 	
-	
+	public String RejectTDRPreEncashment(TermDepositApplicationDTO TDADTO) 
+	{
+		Connection lcl_conn_dt= utility.db_conn();
+		String updateDealQuery ="update tdr_deal set deal_status = 21 where TDR_app_id='"+TDADTO.GetApplicationNo().substring(0,5)+"'";
+		String  updateApplicationQuery ="update tdr_application set tdr_app_status = 3 where application_id='"+TDADTO.GetApplicationNo().substring(0,5)+"'";
+		String GetTDRDealNoQuery = "SELECT lpad(deal_id,6,'0') As deal_id,Day(deal_date) AS day, year(deal_date) as Year FROM TDR_DEAL where tdr_app_id = '"+TDADTO.GetApplicationNo().substring(0,5)+"'";
+		
+		java.sql.Statement lcl_stmt; 
+		int tdrPreencashStatus=0;
+		int tdrapptatus=0;
+		String dealno = null;
+		ResultSet tdrDealNoRS = null;
+		try {
+			lcl_stmt= lcl_conn_dt.createStatement();
+			tdrPreencashStatus = lcl_stmt.executeUpdate(updateDealQuery);
+			tdrapptatus=lcl_stmt.executeUpdate(updateApplicationQuery);
+			tdrDealNoRS = lcl_stmt.executeQuery(GetTDRDealNoQuery);
+			if(tdrDealNoRS.next())
+			{
+				dealno = tdrDealNoRS.getString("deal_id")+"/"+Session.GetBranchCode()+"/"+tdrDealNoRS.getString("day")+"/"+tdrDealNoRS.getString("year");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(tdrPreencashStatus > 0 && tdrapptatus > 0  )
+		{
+			return dealno;
+		}
+		else{
+			return null;
+		}
+	}
 	public float getSavingRate()
 	{
 		String getSavingRateQuery="Select rate from rates where id =1";
