@@ -7,5 +7,14 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="D:/Material/db2java.zip"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/debugger-app-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/fontbox-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/pdfbox-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/pdfbox-app-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/pdfbox-debugger-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/pdfbox-tools-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/preflight-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/preflight-app-2.0.30.jar"/>
+	<classpathentry kind="lib" path="D:/Material/pdf/xmpbox-2.0.30.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

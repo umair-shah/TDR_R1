@@ -113,7 +113,7 @@ public class TermDepositEOD {
             
             String GetTDRData="select * from tdr_application tdr inner join tdr_deal td on td.tdr_app_id= tdr.application_id inner join " +
             		"account_no an on an.account_id = tdr.account_id inner join tdr_product tp on tdr.product_id = tp.id inner join Branch_tl brn on brn.brn_id = td.brn_id where tdr.tdr_app_status= 3 " +
-            		"and brn.brn_cd = '"+Session.GetBranchCode()+"' and tdr.Maturity_date = '"+dateFormat.format(startDate)+"' or tdr.last_payout_date='"+dateFormat.format(startDate)+"'";
+            		"and brn.brn_cd = '"+Session.GetBranchCode()+"' and (tdr.Maturity_date = '"+dateFormat.format(startDate)+"' or tdr.last_payout_date='"+dateFormat.format(startDate)+"')";
             
             Connection lcl_conn_dt= utility.db_conn();
     		java.sql.Statement lcl_stmt;
@@ -541,7 +541,7 @@ public class TermDepositEOD {
 	{
 		Connection lcl_conn_dt= utility.db_conn();
 		java.sql.Statement lcl_stmt;
-		String CreateVoucherquery = "Select voucher_id from Final Table (insert into Voucher (brn_id,voucher_type_id,voucher_date) values ((select brn_id from Branch_tl where brn_cd= ?), 1 ,? ))";
+		String CreateVoucherquery = "Select voucher_id from Final Table (insert into Voucher (brn_id,voucher_type_id,voucher_date) values ((select brn_id from Branch_tl where brn_cd= ?), 6 ,? ))";
 		String dealVoucherQuery="insert into tdr_deal_voucher(deal_id,voucher_id,approved_by) values ((select deal_id from tdr_deal where tdr_app_id= ?),?,?)";
 		String TransactionQuery="insert into transaction_tl (Amount,Cus_Account_ID,Voucher_ID,Trans_type_id) values (? ,? ,? ,?  ) ";
 		String updateCustAccountQuery= "Update account_tl set balance=balance+ ? where account_id =? ";

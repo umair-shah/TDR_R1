@@ -67,6 +67,21 @@ public class MainMenu {
 		termDepositPopup.setForeground(new Color(255, 255, 255));
 		termDepositPopup.setBackground(new Color(0, 128, 0));
 		
+		JButton SearchCustomerTDR = new JButton("Search TDRs");
+		SearchCustomerTDR.setVisible(false);
+		SearchCustomerTDR.setMaximumSize(new Dimension(200, 23));
+		SearchCustomerTDR.setPreferredSize(new Dimension(200, 23));
+		SearchCustomerTDR.setMinimumSize(new Dimension(200, 23));
+		SearchCustomerTDR.setForeground(Color.BLACK);
+		SearchCustomerTDR.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		SearchCustomerTDR.setBackground(new Color(46, 139, 87));
+		SearchCustomerTDR.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				CustomerTDRSearch sa = new CustomerTDRSearch();
+			}
+		});
+		termDepositPopup.add(SearchCustomerTDR);
+		
 		JButton newApplicationButton = new JButton("New Application");
 		newApplicationButton.setVisible(false);
 		newApplicationButton.setMaximumSize(new Dimension(200, 23));
@@ -80,6 +95,7 @@ public class MainMenu {
 				SearchAccount sa = new SearchAccount();
 			}
 		});
+		
 		termDepositPopup.add(newApplicationButton);
 		
 		JButton modifyApplicationButton = new JButton("Modify Application");
@@ -399,13 +415,16 @@ public class MainMenu {
 		panel.add(btnTransactionSecurity);
 		if(Session.getUserRoleId() == 1)
 		{
+			SearchCustomerTDR.setVisible(true);
 			newApplicationButton.setVisible(true);
 			modifyApplicationButton.setVisible(true);
 			tdrOpenning.setVisible(true);
 			tdrPreMatureEncashment.setVisible(true);
+			
 		}
 		if(Session.getUserRoleId() == 2)
 		{
+			SearchCustomerTDR.setVisible(true);
 			authorizeApplicationButton.setVisible(true);
 			tdrPreMatureAuthorizationButton.setVisible(true);
 		}

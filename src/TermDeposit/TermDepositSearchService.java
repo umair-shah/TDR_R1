@@ -206,7 +206,7 @@ public class TermDepositSearchService {
 	} 
 	public String GetTDRAccount(String accountno)
 	{
-		String tdrAccQuery="Select account_id from account_tl acc inner join customer c on acc.customer_id=c.customer_id inner join account_type at on at.acc_type_id=acc.acc_type_id where c.customer_no= ? and at.desc like '%TDR Account%' ";
+		String tdrAccQuery="Select account_id from account_tl acc inner join customer c on acc.customer_id=c.customer_id inner join account_type at on at.acc_type_id=acc.acc_type_id inner join branch_tl brn on acc.brn_id = brn.brn_id where brn.brn_cd ='" + Session.GetBranchCode() + "' and c.customer_no= ? and at.desc like '%TDR Account%' ";
 		Connection lcl_conn_dt = utility.db_conn();
 		try {
 			PreparedStatement preparedStatement = lcl_conn_dt.prepareStatement(tdrAccQuery);
