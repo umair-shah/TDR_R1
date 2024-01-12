@@ -5,6 +5,7 @@ public class Session {
 	private static int userRoleId;
 	private static String branchCode;
 	private static String branchDate;
+	private static String branchName;
 	
 	public static void SetUserName(String newUserName)
 	{
@@ -19,6 +20,10 @@ public class Session {
 	public static void SetBranchCode(String newBranchCode)
 	{
 		branchCode = newBranchCode;
+	}
+	public static void SetBranchName(String nbranchName)
+	{
+		branchName = nbranchName;
 	}
 	
 	public static void SetBranchDate(String newBranchDate)
@@ -51,7 +56,10 @@ public class Session {
 	{
 		userName = null;
 	}
-
+	public static String GetBranchName()
+	{
+		return branchName;
+	}
 	/**
 	 * @param args
 	 */

@@ -3,7 +3,6 @@ package TermDeposit;
 public class LoginUserDTO {
 	private boolean result;
 	private String lastSignon;
-	
 	public void SetResult(boolean result)
 	{
 		this.result = result;

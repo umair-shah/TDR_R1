@@ -63,7 +63,7 @@ public class UploadFile {
     {
     	File tempfile;
 		try {
-			tempfile = File.createTempFile("tempfile","_"+fileName);
+			tempfile = File.createTempFile("Attached","_TDR Application");
 			FileOutputStream fos= new FileOutputStream(tempfile);
 			fos.write(fileData);
 			fos.close();
@@ -116,7 +116,6 @@ public class UploadFile {
 	    Image scaledImg = srcImg.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
 	    return scaledImg;
 	}
-
     public byte[] readFileData(File file) throws IOException {
         FileInputStream fis = new FileInputStream(file);
         byte[] fileData = new byte[(int) file.length()];

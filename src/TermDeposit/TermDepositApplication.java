@@ -410,6 +410,11 @@ public class TermDepositApplication {
 		updateButton.setBounds(431, 11, 132, 23);
 		panel_4.add(updateButton);
 		panel.repaint();
+		
+		JButton BackButton = new JButton("Back");
+		BackButton.setBounds(20, 11, 132, 23);
+		panel_4.add(BackButton);
+		panel.repaint();
 
 		final AccountDTO accdto=TDRAppDto.GetAccountDTO();
 		
@@ -606,15 +611,36 @@ public class TermDepositApplication {
 			if(status==-1)
 			{
 				JOptionPane.showMessageDialog(frame, "Updated unsuccessful","Unsuccessful",JOptionPane.ERROR_MESSAGE);
+				
 			}
 			else{
 				JOptionPane.showMessageDialog(frame, "Application Updated Successfully \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
 				frame.dispose();
+				TermDepositSearch tds = new TermDepositSearch();
+				try {
+					
+					tds.CreateTDRApplicationWindow(1);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			}
 		}
 		});
-		
+		BackButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				TermDepositSearch tds = new TermDepositSearch();
+				try {
+					frame.dispose();
+					tds.CreateTDRApplicationWindow(1);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		frame.setContentPane(panel);
 		frame.setLocationRelativeTo(null);
 		frame.setModal(true);
@@ -819,6 +845,8 @@ public class TermDepositApplication {
 		rejectButton.setBounds(349, 11, 118, 23);
 		panel_4.add(rejectButton);
 		
+
+		
 		authorizeButton.setEnabled(false);
 		rejectButton.setEnabled(false);
 		btnViewFile = new JButton("View File");
@@ -907,6 +935,13 @@ public class TermDepositApplication {
 					JOptionPane.showMessageDialog(frame, "Application Authorized UnSuccessfully \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
 				}
 				frame.dispose();
+				TermDepositSearch tds = new TermDepositSearch();
+				try {
+					tds.CreateTDRApplicationWindow(0);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -921,7 +956,15 @@ public class TermDepositApplication {
 				{
 					JOptionPane.showMessageDialog(frame, "Application Rejected UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
 				}
-				frame.dispose();
+				
+				TermDepositSearch tds = new TermDepositSearch();
+				try {
+					frame.dispose();
+					tds.CreateTDRApplicationWindow(0);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -942,6 +985,11 @@ public class TermDepositApplication {
 		btnOpenTDR = new JButton("Open TDR");
 		btnOpenTDR.setBounds(431, 11, 132, 23);
 		panel_4.add(btnOpenTDR);
+		
+		JButton BackButton = new JButton("Back");
+		BackButton.setBounds(20, 11, 132, 23);
+		panel_4.add(BackButton);
+		panel.repaint();
 		
 		btnViewFile = new JButton("View File");
 		btnViewFile.setBounds(321, 26, 89, 23);
@@ -1053,6 +1101,13 @@ public class TermDepositApplication {
 					btnOk.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent arg0) {
 							frame.dispose();
+							TermDepositSearch tds = new TermDepositSearch();
+							try {
+								tds.CreateTDRApplicationWindow(2);
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					});
 					btnOk.setBounds(690, 268, 89, 23);
@@ -1068,11 +1123,32 @@ public class TermDepositApplication {
 				else
 				{
 					frame.dispose();
+					
 					JOptionPane.showMessageDialog(frame, "TDR Openning UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
+					TermDepositSearch tds = new TermDepositSearch();
+					try {
+						
+						tds.CreateTDRApplicationWindow(2);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		});
-		
+		BackButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				TermDepositSearch tds = new TermDepositSearch();
+				try {
+					frame.dispose();
+					tds.CreateTDRApplicationWindow(2);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		frame.setContentPane(panel);
 		frame.setLocationRelativeTo(null);
 		frame.setModal(true);
@@ -1095,6 +1171,7 @@ public class TermDepositApplication {
 			filehandler.viewFile(TDRAppDto.GetFileData(), TDRAppDto.GetFileName());
 		}});
 
+		
 		accountNoField.setText(TDRAppDto.GetAccountNo());
 		accountTitleField.setText(TDRAppDto.GetAccountTitle());
 		branchCodeField.setText(accdto.GetBranchCode());
@@ -1312,6 +1389,16 @@ public class TermDepositApplication {
 					{
 						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Request Rejected \n Application ID = "+TDRAppDto.GetApplicationNo() + "\n Deal No = "+dealno,"Successful",JOptionPane.INFORMATION_MESSAGE);
 						frame.dispose();
+						TermDepositSearch tds = new TermDepositSearch();
+						try {
+							frame.dispose();
+							tds.AuthorizePreMatureWindow();
+						} catch (SQLException exp) {
+							// TODO Auto-generated catch block
+							exp.printStackTrace();
+						}
+
+						
 					}
 					else{
 						JOptionPane.showMessageDialog(frame, "TDR Pre Encashment Request Rejected UnSuccessful \n Application ID = "+TDRAppDto.GetApplicationNo(),"Successful",JOptionPane.INFORMATION_MESSAGE);
@@ -1367,6 +1454,15 @@ public class TermDepositApplication {
 						btnOk.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent arg0) {
 								frame.dispose();
+								TermDepositSearch tds = new TermDepositSearch();
+								try {
+									frame.dispose();
+									tds.AuthorizePreMatureWindow();
+								} catch (SQLException exp) {
+									// TODO Auto-generated catch block
+									exp.printStackTrace();
+								}
+								
 							}
 							});
 						
@@ -1383,6 +1479,7 @@ public class TermDepositApplication {
 
 			});
 	}
+		
 		frame.setContentPane(panel);
 		frame.setLocationRelativeTo(null);
 		frame.setModal(true);

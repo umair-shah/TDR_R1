@@ -28,7 +28,7 @@ public class CustomerTDRService {
 				"inner join Account_Type At on acc.Acc_type_id=At.Acc_type_id inner join Branch_tl B on acc.brn_ID = B.brn_ID inner join " +
 				"Customer C on C.Customer_ID= acc.Customer_ID inner join TDR_product " +
 				"P on tdr.Product_ID = P.ID inner join Maturity_action M on m.ID=tdr.maturity_action " +
-				"inner join tdr_deal td on td.tdr_app_id =tdr.application_id inner join tdr_status ts on td.deal_status=ts.ID "+ 
+				"inner join tdr_deal td on td.tdr_app_id =tdr.application_id inner join tdr_deal_status ts on td.deal_status=ts.ID "+ 
 				"where B.brn_cd='"+brnCd+"' and At.acc_type_cd ='"+accType+"' and C.Customer_no ='"+customerNo+"' and acc.run_no='"+runNo+"' and acc.Check_digit='"+chkDigit+"'";
 		Object[][] data=null;
 		java.sql.Statement lcl_stmt;
@@ -58,9 +58,7 @@ public class CustomerTDRService {
 	             data[rowIndex][5] = PreMatureDeals.getString("Tenure");
 	             data[rowIndex][6] = PreMatureDeals.getString("ActionatMaturity");
 	             data[rowIndex][7] = PreMatureDeals.getString("Maturity_date");  
-	             
 	             rowIndex++;
-	             
 	         }
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block

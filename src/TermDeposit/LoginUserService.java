@@ -37,7 +37,7 @@ public class LoginUserService {
 	public LoginUserDTO ValidateUser(String branchCode, String userID, String password) 
 	{
 		LoginUserDTO loginUserDTO = new LoginUserDTO();
-		String loginQuery = "Select ut.*, bt.today_date FROM Users_TL UT INNER JOIN Branch_Tl BT ON UT.Brn_Cd = BT.BRN_Cd WHERE LOGIN_ID = '" + userID + "' AND lpad(UT.brn_cd,4,'0') = '"+ branchCode +"'" ;
+		String loginQuery = "Select ut.*, bt.today_date,bt.Brn_name FROM Users_TL UT INNER JOIN Branch_Tl BT ON UT.Brn_Cd = BT.BRN_Cd WHERE LOGIN_ID = '" + userID + "' AND lpad(UT.brn_cd,4,'0') = '"+ branchCode +"'" ;
 		java.sql.Statement lcl_stmt;
 		ResultSet rs =null;
 		Connection lcl_conn_dt = utility.db_conn();
@@ -63,6 +63,7 @@ public class LoginUserService {
 					Session.SetUserRoleId(rs.getInt("User_role_ID"));
 					Session.SetBranchCode(branchCode);
 					Session.SetBranchDate(rs.getString("TODAY_DATE"));
+					Session.SetBranchName(rs.getString("Brn_name"));
 					loginUserDTO.SetResult(true);
 					loginUserDTO.SetLastSignOn(lastSignOn);
 					return loginUserDTO;

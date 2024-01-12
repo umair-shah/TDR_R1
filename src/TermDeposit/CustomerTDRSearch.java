@@ -106,7 +106,7 @@ private MaxLengthNumericField accountNoField;
 	public void tdrApplications(Object[][] data)
 	{
 		final JDialog frame = new JDialog();
-		frame.setTitle("Authorize Premature Term Deposit");
+		frame.setTitle("Customer TDR List");
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setSize(834,362);
@@ -117,7 +117,7 @@ private MaxLengthNumericField accountNoField;
 		panel.setLayout(null);
 
 
-		String[] columnNames = { "Deal No", "Application No","Amount","ApplicationStatus", "Tenure", "Action at Maturity","Maturity_date"};
+		String[] columnNames = { "Deal No", "Application No","Amount","ApplicationStatus", "Maturity_date", "Tenure", "Action at Maturity"};
 		
 		DefaultTableModel model = new DefaultTableModel(data, columnNames){
 			 public boolean isCellEditable(int row, int column)
@@ -125,7 +125,6 @@ private MaxLengthNumericField accountNoField;
 			     return false;
 			 }
 			};
-			
 		JTable termDepositTable = new JTable(model);
 		termDepositTable.getTableHeader().setReorderingAllowed(false);
 		JScrollPane jScrollPane = new JScrollPane(termDepositTable);

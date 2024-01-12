@@ -36,6 +36,7 @@ public class MainMenu {
 	private JTextField brnCdField;
 	private JTextField brnDtField;
 	private BranchService br = new BranchService();
+	private JTextField brnname;
 	public MainMenu()
 	{
 		createWindow();
@@ -318,7 +319,7 @@ public class MainMenu {
 		
 		brnDtField = new JTextField();
 		brnDtField.setBorder(null);
-		brnDtField.setBounds(634, 11, 86, 20);
+		brnDtField.setBounds(685, 11, 99, 20);
 		panel_1.add(brnDtField);
 		brnDtField.setBackground(new Color(192, 192, 192));
 		brnDtField.setText(Session.GetBranchDate());
@@ -326,12 +327,12 @@ public class MainMenu {
 		brnDtField.setColumns(10);
 		
 		JLabel lblBranchDate = new JLabel("Branch Date:");
-		lblBranchDate.setBounds(531, 14, 74, 14);
+		lblBranchDate.setBounds(601, 14, 74, 14);
 		panel_1.add(lblBranchDate);
 		
 		brnCdField = new JTextField();
 		brnCdField.setBorder(null);
-		brnCdField.setBounds(158, 11, 46, 20);
+		brnCdField.setBounds(124, 11, 46, 20);
 		panel_1.add(brnCdField);
 		brnCdField.setBackground(new Color(192, 192, 192));
 		brnCdField.setText(Session.GetBranchCode());
@@ -341,6 +342,20 @@ public class MainMenu {
 		JLabel lblBranchCode = new JLabel("Branch Code:");
 		lblBranchCode.setBounds(41, 14, 91, 14);
 		panel_1.add(lblBranchCode);
+		
+		JLabel lblBranchName = new JLabel("Branch Name:");
+		lblBranchName.setBounds(254, 14, 91, 14);
+		panel_1.add(lblBranchName);
+		
+		brnname = new JTextField();
+		brnname.setText((String) null);
+		brnname.setEditable(false);
+		brnname.setColumns(10);
+		brnname.setBorder(null);
+		brnname.setBackground(Color.LIGHT_GRAY);
+		brnname.setText(Session.GetBranchName());
+		brnname.setBounds(344, 11, 189, 20);
+		panel_1.add(brnname);
 		
 		JButton btnTradeFinance_1 = new JButton("Trade Finance");
 		btnTradeFinance_1.setEnabled(false);
